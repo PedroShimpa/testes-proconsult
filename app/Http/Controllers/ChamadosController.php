@@ -96,19 +96,11 @@ class ChamadosController extends Controller
     public function store(CreateChamadoRequest $request)
     {
         try {
-            //usei a transação para garantir que todas as ações devem ser executas ou tudo deve ser cancelado
-            DB::beginTransaction();
-
             $data = $request->validated();
             $createChamado = $this->chamado->create($data);
-
-
             $this->sendMailToAdmins($createChamado->id);
-
-            DB::commit();
             return response()->json($createChamado);
         } catch (Exception $e) {
-            DB::rollBack();
             Log::error($e->getMessage());
             return response()->json(['msg' => 'Um erro inesperado occoreu ao criar o chamado'], 500);
         }
@@ -116,20 +108,31 @@ class ChamadosController extends Controller
 
     public function sendFiles(Request $request, $chamadoId)
     {
-        $request->validate([
-            'anexed_files.*' => ['mimes:jpeg,png,jpg,gif,svg,pdf,xls,xlsx,csv']
-        ]);
+
         try {
-            foreach ($request->anexed_files as $file) {
-                $dataInsertArquivo = [
-                    'chamado_id' => $chamadoId,
-                    'filename' => $file->getClientOriginalName(),
-                    'file' => Storage::put(uniqid() . $file->getClientOriginalExtension(), $file)
-                ];
-                $this->chamadoArquivo->create($dataInsertArquivo);
+
+            $data = $request->only('anexed_files');
+            if (!empty($data['anexed_files'])) {
+                $anexedFiles = $data['anexed_files'];
+
+                if (!is_array($anexedFiles)) {
+                    $anexedFiles = [$anexedFiles];
+                }
+                foreach ($anexedFiles as  $file) {
+                    $name = time() . '_' . $file->getClientOriginalName();
+                    $dataInsertArquivo = [
+
+                        'chamado_id' => $chamadoId,
+                        'filename' => $file->getClientOriginalName(),
+                        'file' => $file->move(public_path('uploads'), $name)
+                    ];
+                    $this->chamadoArquivo->create($dataInsertArquivo);
+                }
+                return response()->json('arquivos enviados', 200);
             }
         } catch (Exception $e) {
             Log::error($e->getMessage());
+            return response()->json('erro ao enviar arquivos', 500);
         }
     }
 

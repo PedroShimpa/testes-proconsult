@@ -9,7 +9,7 @@
 	<title>Suporte ProConsult</title>
 </head>
 
-<body class="main ">
+<body class="main bg-light">
 	<h2 class="text-center title">Suporte - ProConsult Engenharia</h2>
 	<div class="container">
 	@yield('content')

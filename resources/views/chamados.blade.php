@@ -82,6 +82,7 @@
         event.preventDefault();
 
         var formData = new FormData($('#createChamadoForm')[0]);
+
         $.ajax({
             url: '/api/chamados',
             method: 'POST',
@@ -95,12 +96,13 @@
                 description: $('#description').val(),
             }),
             success: function(response) {
-                //enviar os arquivos dos chamados
-                sendFiles(response.id, formData)
-                $('#exampleModal').modal('hide');
 
+                $('#exampleModal').modal('hide');
+                limparFormulario('createChamadoForm')
                 getChamados();
                 element.attr('disabled', false);
+                //enviar os arquivos dos chamados
+                sendFiles(response.id, formData)
             },
             error: function(xhr) {
                 $('#validation-errors').html('');
@@ -122,12 +124,13 @@
             headers: {
                 'Authorization': 'Bearer ' + token
             },
-            data: {
-                title: $('#title').val(),
-                description: $('#description').val(),
+            data: files,
+            success: function(response) {
+                console.log(response)
             },
-            success: function(response) {},
-            error: function(xhr) {}
+            error: function(xhr) {
+                console.log(xhr)
+            }
         });
     }
 
@@ -142,14 +145,18 @@
             success: function(response) {
                 var chamadosHtml = "";
                 $.each(response, function(index, chamado) {
-                    // chamadosHtml += `<tr>
-                    //     <td>${chamado.data}</td>
-                    //     <td>${chamado.status}</td>
-                    //     <td>${chamado.autor}</td>
-                    //     <td>${chamado.titulo}</td>
-                    //     <td>${chamado.descricao}</td>
-                    //     <td>Ações</td>
-                    // </tr>`;
+                    chamadosHtml += `<tr>
+                        <td>${formataData(chamado.created_at)}</td>
+                        <td>${chamado.status}</td>
+                        <td>${chamado.creator}</td>
+                        <td>${chamado.title}</td>
+                        <td>${chamado.description}</td>
+                        `
+                    chamadosHtml += `<td><a href="/chamado/${chamado.id}" class="btn btn-primary mr-2">VER</a>`
+                    if (chamado.status != "Finalizado")
+                        chamadosHtml += `
+                        <button class="btn btn-danger finalizarChamado" chamado_id="${chamado.id}">Finalizar</btn></td>`
+                    chamadosHtml += `</tr>`;
                 });
                 $('#chamados').html(chamadosHtml);
             },
@@ -158,6 +165,52 @@
                 window.location.href = '/';
             }
         });
+    }
+
+    $(document).on('click', '.finalizarChamado', function() {
+        var confirmacao = confirm('Tem certeza que deseja executar esta ação?');
+        if (confirmacao) {
+            const token = localStorage.getItem('access_token');
+
+            chamadoId = $(this).attr('chamado_id')
+            $.ajax({
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                url: '/api/chamados/finish/' + chamadoId,
+                method: 'PUT',
+
+                success: function(response) {
+                    alert('Chamado finalizado')
+                    getChamados()
+                },
+                error: function(xhr) {
+                    // Trata erros na requisição
+                }
+            });
+        }
+    })
+
+    function formataData(data) {
+        data = new Date(data)
+        var dia = ("0" + data.getDate()).slice(-2);
+        var mes = ("0" + (data.getMonth() + 1)).slice(-2);
+        var ano = data.getFullYear();
+        var hora = ("0" + data.getHours()).slice(-2);
+        var minuto = ("0" + data.getMinutes()).slice(-2);
+        return dia + "/" + mes + "/" + ano + " " + hora + ":" + minuto;
+    }
+
+    function limparFormulario(formularioId) {
+        var formulario = document.getElementById(formularioId);
+        var elementos = formulario.elements;
+        for (var i = 0; i < elementos.length; i++) {
+            var elemento = elementos[i];
+
+            if (elemento.tagName === 'INPUT' || elemento.tagName === 'SELECT' || elemento.tagName === 'TEXTAREA') {
+                elemento.value = '';
+            }
+        }
     }
 </script>
 @endsection

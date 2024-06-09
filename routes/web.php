@@ -19,6 +19,9 @@ Route::get('/', function () {
 Route::get('/chamados', function () {
     return view('chamados');
 });
+Route::get('/chamado/{chamadoId}', function ($chamadoId) {
+    return view('chamado', compact('chamadoId'));
+});
 
 Route::get('/register', function () {
     return view('register');
