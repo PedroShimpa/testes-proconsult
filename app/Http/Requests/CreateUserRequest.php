@@ -28,6 +28,14 @@ class CreateUserRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'cpf.unique' => 'Este CPF ja esta sendo ultilizado',
+            'email.unique' => 'Este E-mail ja esta sendo ultilizado',
+        ];
+    }
+
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {

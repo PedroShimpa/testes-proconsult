@@ -38,7 +38,7 @@ class CreateChamadoRequest extends FormRequest
         $validate =  [
             'client_id' => ['required'],
             'title' => ['required', 'max:190'],
-            'description' => ['required', 'min:20'],
+            'description' => ['required'],
         ];
         if (!empty($this->anexed_files)) {
             $validate['anexed_files.*'] = ['mimes:jpeg,png,jpg,gif,svg,pdf,xls,xlsx,csv'];

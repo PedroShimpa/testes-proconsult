@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chamado extends Model
 {
-    protected $fillable = ['title', 'description', 'user_id', 'client_id', 'status'];
+    protected $fillable = ['title', 'description', 'client_id', 'status'];
 
     protected $possibleStatus = ['A' => "Aguardando", "EA" => "Em Atendimento", "F" => "Finalizado"];
 
@@ -36,7 +36,6 @@ class Chamado extends Model
             'id',
             'title',
             'description',
-            'user_id',
             'status',
             'created_at'
         )->get();

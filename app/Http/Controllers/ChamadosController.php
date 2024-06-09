@@ -127,7 +127,11 @@ class ChamadosController extends Controller
     private function sendMailToAdmins($chamadoId)
     {
         foreach ($this->user->getAdmins() as $user) {
-            Mail::to($user->email)->send(new NovoChamadoMail($chamadoId, $user->name));
+            try {
+                Mail::to($user->email)->send(new NovoChamadoMail($chamadoId, $user->name));
+            } catch (Exception $e) {
+                Log::error($e->getMessage());
+            }
         }
     }
 }
