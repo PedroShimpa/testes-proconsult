@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "d9ca90c6-2359-420a-99e5-ed6dfa602c36",
+		"name": "Chamados",
+		"description": "Esta documentação se refere ao teste tecnico da ProConsult Engenharia",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33657682"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Pedro Falconi\",\r\n    \"cpf\": \"75960831023\",\r\n    \"email\": \"teste@teste.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/register",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"register"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Registra um usuario do tipo C (cliente) para virar admin/colaborador é preciso acessar diretamente pelo banco de dados e alterar para A (Admin)"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"teste@chamados.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Novo Chamado",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"teste 01\",\r\n    \"description\": \"teste de envio de dados para cadastro de um novo chamado no banco de dados\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/chamados?",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"chamados"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				},
+				"description": "Criar um novo chamado, por um bug do postman não é possivel enviar arquivos aqui, somente pela aplicação frontend"
+			},
+			"response": []
+		},
+		{
+			"name": "Enviar Arquivos",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "anexed_files",
+							"value": "",
+							"type": "file"
+						}
+					],
+					"options": {
+						"formdata": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/chamados/files/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"chamados",
+						"files",
+						"1"
+					]
+				},
+				"description": "Criar um novo chamado, por um bug do postman não é possivel enviar arquivos aqui, somente pela aplicação frontend"
+			},
+			"response": []
+		},
+		{
+			"name": "Chamados",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/chamados",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"chamados"
+					]
+				},
+				"description": "Esta rota busca os chamados tanto para os clientes quanto para os colaboradores, porem os clientes só veem os proprios chamados e os colaboradores podem ver todos os chamados"
+			},
+			"response": []
+		},
+		{
+			"name": "Chamado",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/chamados/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"chamados",
+						"2"
+					]
+				},
+				"description": "Esta rota busca um chamado por id e tras todas as informações do mesmo, se o usuario não for um adminsitrador ele só consegue buscar chamados que pertencem ao seu id"
+			},
+			"response": []
+		},
+		{
+			"name": "Responder Chamado",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\": \"esta é a resposta de um admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/chamados/reply/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"chamados",
+						"reply",
+						"1"
+					]
+				},
+				"description": "Esta rota pode ser usada pelo cliente e pelo administrador e gera como se fosse um \"chat\" no chamado"
+			},
+			"response": []
+		},
+		{
+			"name": "Finalizar Chamado",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/chamados/finish/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"chamados",
+						"finish",
+						"1"
+					]
+				},
+				"description": "Após finalizar um chamado, ele não pdoe mais receber interações"
+			},
+			"response": []
+		}
+	]
+}
