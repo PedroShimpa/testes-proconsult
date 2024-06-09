@@ -102,17 +102,7 @@ class ChamadosController extends Controller
             $data = $request->validated();
             $createChamado = $this->chamado->create($data);
 
-            //apos criar o chamado, pega todos os arquivos enviados anteriormente e os incorpora no chamado
-            if (!empty($createChamado) && !empty($data['anexed_files'])) {
-                foreach ($data['anexed_files'] as $file) {
-                    $dataInsertArquivo = [
-                        'chamado_id' => $createChamado->id,
-                        'filename' => $file->getClientOriginalName(),
-                        'file' => Storage::put(uniqid() . $file->getClientOriginalExtension(), $file)
-                    ];
-                    $this->chamadoArquivo->create($dataInsertArquivo);
-                }
-            }
+
             $this->sendMailToAdmins($createChamado->id);
 
             DB::commit();
@@ -121,6 +111,25 @@ class ChamadosController extends Controller
             DB::rollBack();
             Log::error($e->getMessage());
             return response()->json(['msg' => 'Um erro inesperado occoreu ao criar o chamado'], 500);
+        }
+    }
+
+    public function sendFiles(Request $request, $chamadoId)
+    {
+        $request->validate([
+            'anexed_files.*' => ['mimes:jpeg,png,jpg,gif,svg,pdf,xls,xlsx,csv']
+        ]);
+        try {
+            foreach ($request->anexed_files as $file) {
+                $dataInsertArquivo = [
+                    'chamado_id' => $chamadoId,
+                    'filename' => $file->getClientOriginalName(),
+                    'file' => Storage::put(uniqid() . $file->getClientOriginalExtension(), $file)
+                ];
+                $this->chamadoArquivo->create($dataInsertArquivo);
+            }
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
         }
     }
 

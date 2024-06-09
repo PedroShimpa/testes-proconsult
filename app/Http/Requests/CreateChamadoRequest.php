@@ -14,12 +14,7 @@ class CreateChamadoRequest extends FormRequest
     public function prepareForValidation()
     {
         $data = [];
-
-        if (!empty($this->anexed_files)) {
-            $data['anexed_files'] = !is_array($this->anexed_files) ? [$this->anexed_files] : $this->anexed_files;
-        }
         $data['client_id'] = auth()->user()->id;
-
         $this->merge($data);
     }
 
@@ -40,9 +35,9 @@ class CreateChamadoRequest extends FormRequest
             'title' => ['required', 'max:190'],
             'description' => ['required'],
         ];
-        if (!empty($this->anexed_files)) {
-            $validate['anexed_files.*'] = ['mimes:jpeg,png,jpg,gif,svg,pdf,xls,xlsx,csv'];
-        }
+        // if (!empty($this->anexed_files)) {
+        //     $validate['anexed_files.*'] = ['mimes:jpeg,png,jpg,gif,svg,pdf,xls,xlsx,csv'];
+        // }
         return $validate;
     }
 }

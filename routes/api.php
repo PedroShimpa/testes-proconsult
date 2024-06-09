@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,10 +17,11 @@ Route::group([
     'prefix' => 'chamados'
 ], function ($router) {
     Route::post('', 'App\Http\Controllers\ChamadosController@store');
+    Route::post('/files/{id}', 'App\Http\Controllers\ChamadosController@sendFiles')->where('id', '[0-9]+');
     Route::get('', 'App\Http\Controllers\ChamadosController@index');
-    Route::get('/{id}', 'App\Http\Controllers\ChamadosController@getById')->where('id', '[0-9]+');;
-    Route::post('/reply/{id}', 'App\Http\Controllers\ChamadosController@replyChamado')->where('id', '[0-9]+');;
-    Route::put('/finish/{id}', 'App\Http\Controllers\ChamadosController@finishChamado')->where('id', '[0-9]+');;
+    Route::get('/{id}', 'App\Http\Controllers\ChamadosController@getById')->where('id', '[0-9]+');
+    Route::post('/reply/{id}', 'App\Http\Controllers\ChamadosController@replyChamado')->where('id', '[0-9]+');
+    Route::put('/finish/{id}', 'App\Http\Controllers\ChamadosController@finishChamado')->where('id', '[0-9]+');
 });
 
 Route::group([

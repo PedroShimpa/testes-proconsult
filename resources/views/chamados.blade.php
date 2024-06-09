@@ -85,14 +85,20 @@
         $.ajax({
             url: '/api/chamados',
             method: 'POST',
-            contentType: false,
-            processData: false,
             headers: {
                 'Authorization': 'Bearer ' + token
             },
-            data: formData,
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({
+                title: $('#title').val(),
+                description: $('#description').val(),
+            }),
             success: function(response) {
+                //enviar os arquivos dos chamados
+                sendFiles(response.id, formData)
                 $('#exampleModal').modal('hide');
+
                 getChamados();
                 element.attr('disabled', false);
             },
@@ -105,6 +111,25 @@
             }
         });
     });
+
+    function sendFiles(chamadoId, files) {
+        const token = localStorage.getItem('access_token');
+        $.ajax({
+            url: '/api/chamados/files/' + chamadoId,
+            method: 'POST',
+            contentType: false,
+            processData: false,
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            data: {
+                title: $('#title').val(),
+                description: $('#description').val(),
+            },
+            success: function(response) {},
+            error: function(xhr) {}
+        });
+    }
 
     function getChamados() {
         const token = localStorage.getItem('access_token');
