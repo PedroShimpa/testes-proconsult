@@ -3,7 +3,7 @@
 <div class="row justify-content-center">
 	<div class="col-md-6">
 		<div class="card">
-			<div class="card-header">Registro</div>
+			<div class="card-header">Cadastro</div>
 			<div class="card-body">
 				<div id="validation-errors">
 				</div>
@@ -23,7 +23,7 @@
 					<label for="password">Senha</label>
 					<input type="password" class="form-control" id="password" name="password" required maxlength="30">
 				</div>
-				<button id="sendRegister" class="btn btn-primary">Registrar</button>
+				<button id="sendRegister" class="btn btn-primary">Cadastrar</button>
 				<a href="/">Login</a>
 			</div>
 		</div>

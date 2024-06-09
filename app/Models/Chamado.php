@@ -8,7 +8,7 @@ class Chamado extends Model
 {
     protected $fillable = ['title', 'description', 'client_id', 'status'];
 
-    protected $possibleStatus = ['A' => "Aguardando", "EA" => "Em Atendimento", "F" => "Finalizado"];
+    protected $possibleStatus = ['A' => "Aberto", "EA" => "Em Atendimento", "F" => "Finalizado"];
 
     protected $date = [
         'created_at'

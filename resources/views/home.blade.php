@@ -14,7 +14,7 @@
                     <input type="password" class="form-control" id="password" name="password" required maxlength="30">
                 </div>
                 <button id="sendLogin" class="btn btn-primary">Login</button>
-                <a href="/register">Registrar</a>
+                <a href="/register">Cadastro</a>
             </div>
         </div>
     </div>
