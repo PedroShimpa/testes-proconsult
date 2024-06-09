@@ -3,6 +3,7 @@ criar e configurar banco de dados
 Configurar Email
 rodar: php artisan migrate --seed (a seed é para criar um colaborador para testes)
 rodar: php artisan key:generate
+rodar: php artisan storage:link
 
 Requisitos:
 PHP 7.3 (Usei php 7.3.30)
