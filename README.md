@@ -1,16 +1,29 @@
-Renomear o .env.example para .env
-criar e configurar banco de dados
-Configurar Email
-rodar: php artisan migrate --seed (a seed é para criar um colaborador para testes)
-rodar: php artisan key:generate
-rodar: php artisan storage:link
+# Teste de Admissão ProConsult
 
-Requisitos:
-PHP 7.3 (Usei php 7.3.30)
-Mysql
+Este projeto é inspirado no teste de admissão da Pro Consult Engenharia.
 
-Usuario teste (colaborador):
-Email: teste@chamados.com
-Senha: 123456
+Link dos requisitos do projeto: [Teste de Admissão ProConsult](https://github.com/ProConsult-Dev/teste-admissao-proconsult)
 
-Documentação: https://go.postman.co/workspace/3131f631-dff7-4840-83c6-2d927e6baed5/collection/33657682-d9ca90c6-2359-420a-99e5-ed6dfa602c36
+## Iniciando o Projeto
+
+Este projeto utiliza o framework Laravel. Siga os passos abaixo para iniciar o projeto:
+
+1. Renomeie o arquivo `.env.example` para `.env`.
+2. Crie e configure o banco de dados.
+3. Configure os dados de envio de e-mail no arquivo `.env`.
+4. Execute o comando: `php artisan migrate --seed` (a seed é para criar um colaborador para testes).
+5. Execute o comando: `php artisan key:generate`.
+
+### Requisitos
+
+- PHP 7.3 (Utilizado PHP 7.3.30)
+- MySQL
+
+### Usuário de Teste (Colaborador)
+
+- Email: teste@chamados.com
+- Senha: 123456
+
+## Documentação
+
+A documentação do projeto está disponível no arquivo `Chamados.postman_collection.json`. Você pode importá-lo no Postman para acessar a documentação.
