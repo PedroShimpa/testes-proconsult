@@ -31,6 +31,12 @@ class CreateChamadoRespostaRequest extends FormRequest
         return $validate;
     }
 
+    public function messages()
+    {
+        return [
+            'content.required' => 'Digite algo na resposta antes de enviar!'
+        ];
+    }
 
     public function withValidator($validator)
     {
