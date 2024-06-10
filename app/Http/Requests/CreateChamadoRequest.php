@@ -22,7 +22,7 @@ class CreateChamadoRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             if (auth()->user()->type != "C") {
-                $validator->errors()->add('client_id', 'Você não pode criar chamados!');
+                $validator->errors()->add('client_id', 'Você é um colaborador/administrador do sistema! Somente clientes podem gerar chamados.');
             }
         });
     }
