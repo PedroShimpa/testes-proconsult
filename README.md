@@ -30,6 +30,6 @@ A documentação do projeto está disponível no arquivo `Chamados.postman_colle
 
 ## Testes Automaticos
 
-*Atenção*: Executar os testes automatico gera dadoos adversos.
+*Atenção*: Executar os testes automatico gera dados adversos.
 
 1. Execute o comando: `php artisan test`.
