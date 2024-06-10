@@ -4,7 +4,7 @@ use App\Http\Controllers\ChamadosController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('home');
+    return view('login');
 });
 Route::get('/chamados', function () {
     return view('chamados');

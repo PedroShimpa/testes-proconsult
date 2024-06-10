@@ -54,26 +54,26 @@
 					password: $('#password').val(),
 				}),
 				success: function(response) {
-					alert('Registrado com sucesso, redirecionando para o login')
+					alert('Registrado com sucesso, você será redirecionado para o login.')
 					window.location.href = '/';
 					element.attr('disabled', false)
 
 				},
 				error: function(xhr) {
 					$('#validation-errors').html('');
-			element.attr('disabled', false)
+					element.attr('disabled', false)
 
 					$.each(xhr.responseJSON.errors, function(key, value) {
 						$('#validation-errors').append('<div class="alert alert-danger">' + value + '</div>');
 					});
 				},
 			});
-		
+
 		});
 	});
 
 	$('#cpf').on('input', function() {
-                this.value = this.value.replace(/[^0-9]/g, '');
-            });
+		this.value = this.value.replace(/[^0-9]/g, '');
+	});
 </script>
 @endsection

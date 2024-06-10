@@ -177,7 +177,7 @@
                 status = '<span class="badge badge-primary">Aberto</span>'
                 break;
             case 'Em Atendimento':
-                status = '<span class="badge badge-successs">Em Atendimento</span>'
+                status = '<span class="badge badge-success">Em Atendimento</span>'
                 break;
             case 'Finalizado':
                 status = '<span class="badge badge-danger">Finalizado</span>'
