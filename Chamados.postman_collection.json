@@ -38,7 +38,7 @@
 						}
 					]
 				},
-				"description": "Registra um usuario do tipo C (cliente) para virar admin/colaborador é preciso acessar diretamente pelo banco de dados e alterar para A (Admin)"
+				"description": "Registra um usuario do tipo C (cliente) para virar admin/colaborador é preciso executar o comando descrito no README do projeto"
 			},
 			"response": []
 		},

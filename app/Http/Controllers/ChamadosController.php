@@ -11,10 +11,8 @@ use App\Models\ChamadoResposta;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 
 class ChamadosController extends Controller
 {
@@ -26,7 +24,7 @@ class ChamadosController extends Controller
 
     public function __construct(Chamado $chamado, ChamadoArquivo $chamadoArquivo, ChamadoResposta $chamadoResposta, User $user)
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->except(['downloadFile']);
         $this->chamado = $chamado;
         $this->chamadoArquivo = $chamadoArquivo;
         $this->chamadoResposta = $chamadoResposta;
@@ -108,9 +106,7 @@ class ChamadosController extends Controller
 
     public function sendFiles(Request $request, $chamadoId)
     {
-
         try {
-
             $data = $request->only('anexed_files');
             if (!empty($data['anexed_files'])) {
                 $anexedFiles = $data['anexed_files'];
@@ -121,7 +117,6 @@ class ChamadosController extends Controller
                 foreach ($anexedFiles as  $file) {
                     $name = time() . '_' . $file->getClientOriginalName();
                     $dataInsertArquivo = [
-
                         'chamado_id' => $chamadoId,
                         'filename' => $file->getClientOriginalName(),
                         'file' => $file->move(public_path('uploads'), $name)
@@ -145,5 +140,11 @@ class ChamadosController extends Controller
                 Log::error($e->getMessage());
             }
         }
+    }
+
+    public function downloadFile()
+    {
+        $file = request()->input('file');
+        return response()->download($file);
     }
 }

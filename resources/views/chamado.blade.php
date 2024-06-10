@@ -51,7 +51,7 @@
                         `
 
 				$.each(chamado.arquivos, function(index, value) {
-					chamadosHtml += `<a href="${value.file}" class="btn" download>${value.filename}</a><hr>`
+					chamadosHtml += `<a href="/chamados/download?file=${value.file}" class="btn" >${value.filename}</a><hr>`
 				})
 
 				chamadosHtml += `</div></div><br>	<div class="card">

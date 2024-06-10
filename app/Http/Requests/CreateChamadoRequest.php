@@ -27,7 +27,6 @@ class CreateChamadoRequest extends FormRequest
         });
     }
 
-
     public function rules()
     {
         $validate =  [
@@ -35,9 +34,6 @@ class CreateChamadoRequest extends FormRequest
             'title' => ['required', 'max:190'],
             'description' => ['required'],
         ];
-        // if (!empty($this->anexed_files)) {
-        //     $validate['anexed_files.*'] = ['mimes:jpeg,png,jpg,gif,svg,pdf,xls,xlsx,csv'];
-        // }
         return $validate;
     }
 }
