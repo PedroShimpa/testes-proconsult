@@ -107,6 +107,9 @@
             error: function(xhr) {
                 $('#validation-errors').html('');
                 element.attr('disabled', false);
+                if(xhr.responseJSON.msg) {
+                    $('#validation-errors').append('<div class="alert alert-danger">' + xhr.responseJSON.msg + '</div>');
+                }
                 $.each(xhr.responseJSON.errors, function(key, value) {
                     $('#validation-errors').append('<div class="alert alert-danger">' + value + '</div>');
                 });

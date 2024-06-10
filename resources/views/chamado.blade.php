@@ -78,7 +78,6 @@
 		element.attr('disabled', 'true');
 		event.preventDefault();
 
-
 		$.ajax({
 			url: '/api/chamados/reply/' + "{{$chamadoId}}",
 			method: 'POST',
@@ -97,6 +96,9 @@
 			error: function(xhr) {
 				$('#validation-errors').html('');
 				element.attr('disabled', false);
+				if (xhr.responseJSON.msg) {
+					$('#validation-errors').append('<div class="alert alert-danger">' + xhr.responseJSON.msg + '</div>');
+				}
 				$.each(xhr.responseJSON.errors, function(key, value) {
 					alert(value)
 					$('#validation-errors').append('<div class="text text-danger">' + value + '</div>');
