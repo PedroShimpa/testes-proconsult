@@ -27,3 +27,9 @@ Este projeto utiliza o framework Laravel. Siga os passos abaixo para iniciar o p
 ## Documentação
 
 A documentação do projeto está disponível no arquivo `Chamados.postman_collection.json`. Você pode importá-lo no Postman para acessar a documentação.
+
+## Testes Automaticos
+
+*Atenção*: Executar os testes automatico gera dadoos adversos.
+
+1. Execute o comando: `php artisan test`.

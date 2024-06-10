@@ -107,7 +107,7 @@
             error: function(xhr) {
                 $('#validation-errors').html('');
                 element.attr('disabled', false);
-                if(xhr.responseJSON.msg) {
+                if (xhr.responseJSON.msg) {
                     $('#validation-errors').append('<div class="alert alert-danger">' + xhr.responseJSON.msg + '</div>');
                 }
                 $.each(xhr.responseJSON.errors, function(key, value) {
@@ -148,17 +148,18 @@
             success: function(response) {
                 var chamadosHtml = "";
                 $.each(response, function(index, chamado) {
-                    chamadosHtml += `<tr>
+                    statusColor =
+                        chamadosHtml += `<tr>
                         <td>${formataData(chamado.created_at)}</td>
-                        <td>${chamado.status}</td>
+                        <td>${badgeColor(chamado.status)}</td>
                         <td>${chamado.creator}</td>
                         <td>${chamado.title}</td>
                         <td>${chamado.description}</td>
                         `
                     chamadosHtml += `<td><a href="/chamado/${chamado.id}" class="btn btn-primary mr-2">VER</a>`
-                    if (chamado.status != "Finalizado")
-                        chamadosHtml += `
-                        <button class="btn btn-danger finalizarChamado" chamado_id="${chamado.id}">Finalizar</btn></td>`
+                    if (chamado.status != "Finalizado") {
+                        chamadosHtml += `<button class="btn btn-danger finalizarChamado" chamado_id="${chamado.id}">FINALIZAR</btn></td>`
+                    }
                     chamadosHtml += `</tr>`;
                 });
                 $('#chamados').html(chamadosHtml);
@@ -170,11 +171,29 @@
         });
     }
 
+    function badgeColor(status) {
+        switch (status) {
+            case 'Aberto':
+                status = '<span class="badge badge-primary">Aberto</span>'
+                break;
+            case 'Em Atendimento':
+                status = '<span class="badge badge-successs">Em Atendimento</span>'
+                break;
+            case 'Finalizado':
+                status = '<span class="badge badge-danger">Finalizado</span>'
+                break;
+            default:
+                status = 'Erro'
+                break;
+        }
+
+        return status;
+    }
+
     $(document).on('click', '.finalizarChamado', function() {
         var confirmacao = confirm('Tem certeza que deseja executar esta ação?');
         if (confirmacao) {
             const token = localStorage.getItem('access_token');
-
             chamadoId = $(this).attr('chamado_id')
             $.ajax({
                 headers: {
@@ -182,14 +201,10 @@
                 },
                 url: '/api/chamados/finish/' + chamadoId,
                 method: 'PUT',
-
                 success: function(response) {
                     alert('Chamado finalizado')
                     getChamados()
                 },
-                error: function(xhr) {
-                    // Trata erros na requisição
-                }
             });
         }
     })
@@ -209,7 +224,6 @@
         var elementos = formulario.elements;
         for (var i = 0; i < elementos.length; i++) {
             var elemento = elementos[i];
-
             if (elemento.tagName === 'INPUT' || elemento.tagName === 'SELECT' || elemento.tagName === 'TEXTAREA') {
                 elemento.value = '';
             }
